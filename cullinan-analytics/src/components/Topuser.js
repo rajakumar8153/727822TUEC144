@@ -26,6 +26,7 @@ const Topuser = () => {
             <h1>Top Users</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <ul>
+            <div></div>
                 {topUsers.map(user => (
                     <li key={user.id}>{user.name} - {user.email}</li>
                 ))}

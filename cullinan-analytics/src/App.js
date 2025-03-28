@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Feed from './components/Feed';
 import Topuser from './components/Topuser';
 import Trendingpost from './components/Trendingpost';
-import './styles/Styles.css'; // Import global styles
+import './styles/Styles.css';
 
 
 const App = () => {
@@ -15,6 +15,8 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Feed />} />
                 <Route path="/top-users" element={<Topuser />} />
+
+                <div></div>
                 <Route path="/trending-posts" element={<Trendingpost />} />
             </Routes>
         </Router>
