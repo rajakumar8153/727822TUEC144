@@ -3,33 +3,31 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Topuser = () => {
-    const [topUsers, setTopUsers] = useState([]);
+    const [topUsers, setTopu] = useState([]);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            const response = await axios.get('http://20.244.56.144/test/users');
-            const users = response.data.users;
-
-            const userPostCounts = await Promise.all(
-                Object.keys(users).map(async (userId) => {
-                    const postsResponse = await axios.get(`http://20.244.56.144/test/users/${userId}/posts`);
-                    return { userId, userName: users[userId], postCount: postsResponse.data.posts.length };
-                })
-            );
-
-            const sortedUsers = userPostCounts.sort((a, b) => b.postCount - a.postCount).slice(0, 5);
-            setTopUsers(sortedUsers);
+        const fetchu = async () => {
+            try {
+                const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+              
+                setTopu(response.data.slice(0, 5));
+            } catch (error) {
+                console.error("Error fetching:", error);
+                setError("Failed to fetch top users.");
+            }
         };
 
-        fetchUsers();
+        fetchu();
     }, []);
 
     return (
         <div>
             <h1>Top Users</h1>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <ul>
                 {topUsers.map(user => (
-                    <li key={user.userId}>{user.userName}: {user.postCount} posts</li>
+                    <li key={user.id}>{user.name} - {user.email}</li>
                 ))}
             </ul>
         </div>
